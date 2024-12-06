@@ -73,7 +73,7 @@ void *startup(void *argc, void *argv)
     s = MyStruct__new((void*)(long)10, (void*)(long)8);
     printf("%s", (char*)("Hello World!\n"));
     MyStruct__dispose(s);
-    return (void*)0;
+    return (void*)(long)0;
 }
 
 int main(int argc, char *argv[])

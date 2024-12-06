@@ -6,14 +6,15 @@ importScripts("./parser.js");
 
 function startup(argc, argv)
 {
-	var lex,par;
+	var lex,par,inp,s;
 		
 	print2(argc);
 	if (argc < 4 || strcmp(_("-o"), argv[1])) {
 		usage();
 	}
-
-	lex = lexer__new();
+	s = file_size(argv[3]);
+	inp = file_load(argv[3], s);
+	lex = lexer__new(inp,s);
 	par = parser__new(lex);
 
 	print(argv[2]);
@@ -21,6 +22,7 @@ function startup(argc, argv)
 
 	parser__dispose(par);
 	lexer__dispose(lex);
+	free(inp);
 	return 0;
 }
 

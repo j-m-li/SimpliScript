@@ -8,7 +8,7 @@ echo "========== SimpliScript build ${SHELL} ================="
 DIR=$(dirname "$0")
 (mkdir -p bin;)
 (echo build .. $2)
-(cd ${DIR}/bin; node ../src/js2c.js -o h.c ../src/hello.js)
+(cd ${DIR}/bin; node ../src/js2c.js -o h.c ../doc/hello.js)
 exit $?
 :CMDENTRY
 

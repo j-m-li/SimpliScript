@@ -30,6 +30,7 @@ function parser__process(self)
 	while (tk != null) {
 		tk = lexer__next(self.lex);
 	}
+	return 0;
 }
 
 exporting([ 
