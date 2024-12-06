@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rikiki</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+let worker;
+function run(s)
+{
+	worker = new Worker(s);
+	const con = document.getElementById('console');
+	const canv = document.getElementById('canvas');
+	const can = canv.transferControlToOffscreen();
+	worker.onmessage = function (event) {
+
+		con.innerHTML += event.data;	
+	};
+	worker.postMessage({type: 'canvas', canvas: can},[can]);
+
+}
+// worker.terminate();
+</script>
+</head>
+<body>
+<canvas id="canvas" width="320" height="320"></canvas>
+<div id="console"></div>
+<script>
+run("hello.js");
+</script>
+</body>
+</html>
