@@ -6,7 +6,7 @@ JavaScript subset for easy translation to C
 The name of this project comes from a chat with [copilot](https://copilot.microsoft.com/chats/UBFBNeHixBPQd3ZQArFxf).
 
 
-JavaScript
+### JavaScript
 ```
 class MyStruct {
     x;
@@ -16,6 +16,8 @@ class MyStruct {
 function MyStruct__new(x,y)
 {
     var self;
+    struct(self, MyStruct);
+
     self = new MyStruct();
     self.x = x;
     self.y = y;
@@ -30,6 +32,8 @@ function MyStruct__dispose(self)
 function startup(argc, argv)
 {
     var s;
+    struct(s, MyStruct);
+
     s = MyStruct__new(10,8);
     print(_("Hello World!\n"));
     MyStruct__dispose(s);
@@ -37,8 +41,9 @@ function startup(argc, argv)
 }
 ```
 
-Translated to C (conceptual)
+### Translated to C 
 ```
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -49,10 +54,10 @@ typedef struct MyStruct {
 
 void *MyStruct__new(void *x, void *y)
 {
-    void *self;
+    MyStruct *self;
     self = malloc(sizeof(MyStruct));
-    self.x = x;
-    self.y = y;
+    self->x = x;
+    self->y = y;
     return self;
 }
 
@@ -62,22 +67,24 @@ void *MyStruct__dispose(void *self)
     return NULL;
 }
 
-void *startup(argc, argv)
+void *startup(void *argc, void *argv)
 {
-    void *s;
-    s = MyStruct__new(10,8);
+    MyStruct *s;
+    s = MyStruct__new((void*)(long)10, (void*)(long)8);
     printf("%s", (char*)("Hello World!\n"));
     MyStruct__dispose(s);
-    return NULL;
+    return (void*)0;
 }
 
 int main(int argc, char *argv[])
 {
-    return (int)startup((void*)argc, (void*)argv);
+    return (int)(long)startup((void*)(long)argc, (void*)argv);
 }
+
 
 ```
 
+***
 
 https://3o3.org
 
